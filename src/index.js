@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 const App = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
   const [visible, setVisible] = useState(true);
 
   if (visible) {
@@ -80,8 +80,7 @@ const HookCounter = ({ value }) => {
   return <div>{ value }</div>
 };
 
-const PlanetInfo = ({ id }) => {
-
+const usePlanetInfo = (id) => {
   const [ planet, setPlanet ] = useState('Wait for planet name load');
 
   useEffect(() => {
@@ -91,6 +90,13 @@ const PlanetInfo = ({ id }) => {
     .then((planet) => !isCancelled && setPlanet(planet.name));
     return () => isCancelled = true;
   }, [id]);
+
+  return planet;
+};
+
+const PlanetInfo = ({ id }) => {
+
+  const planet = usePlanetInfo(id);
 
   return (
     <div>
